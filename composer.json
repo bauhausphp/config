@@ -24,7 +24,7 @@
 
    "require": {
       "php": ">=7.0",
-      "bauhaus/container": "~v1.0"
+      "bauhaus/container": "dev-master"
    },
 
    "autoload": {
