@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'environment' => 'testing',
     'debug' => true,
 
@@ -18,5 +17,10 @@ return [
     'someApi' => [
         'baseUrl' => 'example.com/api/',
         'token' => '*********',
-    ]
+    ],
+
+    'someList' => [
+        'val1',
+        'val2',
+    ],
 ];

@@ -1,6 +1,6 @@
 default:
    autoload:
-      '': %paths.base%/acceptance/
+      '': %paths.base%/../acceptance/
 
    suites:
       defaults:
@@ -8,8 +8,8 @@ default:
 
       config_container:
          paths:
-            - %paths.base%/acceptance/features/
+            - %paths.base%/../acceptance/features/
          contexts:
-            - Bauhaus\ConfigContainerUserContext
+            - Bauhaus\Config\ConfigContainerClientContext
          filters:
-            role: config container user
+            role: config container client

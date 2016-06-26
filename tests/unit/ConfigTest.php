@@ -1,6 +1,6 @@
 <?php
 
-namespace Bauhaus;
+namespace Bauhaus\Config;
 
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
@@ -8,62 +8,70 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->config = Config::loadFromPHPFile(__DIR__ . '/../config-sample.php');
+        $this->config = new Config(require __DIR__ . '/../config-sample.php');
     }
 
     /**
      * @test
-     * @testdox Loading configuration from PHP file
-     * @dataProvider labelAndValuesOfOneLevelDataOfSampleConfigInfo
+     * @dataProvider valuesAndLabelOfSimpleData
      */
-    public function loadingConfigurationFromPHPFile($label, $value)
+    public function retrievingValueWhenRequireSimpleData($expected, $label)
     {
-        $this->assertEquals($value, $this->config->$label);
+        $this->assertEquals($expected, $this->config->$label);
     }
 
-    public function labelAndValuesOfOneLevelDataOfSampleConfigInfo()
+    public function valuesAndLabelOfSimpleData()
     {
         return [
-            ['environment', 'testing'],
-            ['debug', true],
-            ['googleMapsApiKey', '**************'],
-            ['googleAnalyticsId', 'U-12345678'],
+            ['testing', 'environment'],
+            [true, 'debug'],
+            ['**************', 'googleMapsApiKey'],
+            ['U-12345678', 'googleAnalyticsId'],
         ];
     }
 
     /**
      * @test
-     * @dataProvider dataOfSecondLevelDataOfSampleConfigInfo
+     * @dataProvider sequencialArraysAndLabelOfListData
      */
-    public function accessingNthLevelInfoAsAnotherConfigContainer($expected, $firstLevelLabel)
+    public function retrievingSequecialArrayWhenRequireListData($expected, $label)
     {
-        $this->assertEquals($expected, $this->config->$firstLevelLabel->all());
-
-        foreach ($expected as $label => $expectedLabelValue) {
-            $this->assertEquals(
-                $expectedLabelValue,
-                $this->config->$firstLevelLabel->$label
-            );
-        }
+        $this->assertEquals($expected, $this->config->$label);
     }
 
-    public function dataOfSecondLevelDataOfSampleConfigInfo()
+    public function sequencialArraysAndLabelOfListData()
+    {
+        return [
+            [['val1', 'val2'], 'someList'],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider configContainerAndLabelOfAssocArrayData
+     */
+    public function retrievingAnotherConfigContainerWhenRequireAssocArrayData($expected, $label)
+    {
+        $this->assertEquals($expected, $this->config->$label);
+    }
+
+    public function configContainerAndLabelOfAssocArrayData()
     {
         return [
             [
-                [
+                new Config([
                     'host' => 'localhost',
                     'dbname' => 'testing',
                     'user' => 'bauhaus',
                     'password' => 'secret',
-                ],
+                ]),
                 'database',
             ],
             [
-                [
+                new Config([
                     'baseUrl' => 'example.com/api/',
                     'token' => '*********',
-                ],
+                ]),
                 'someApi',
             ]
         ];
@@ -71,38 +79,11 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @dataProvider invalidLabels
-     * @expectedException Bauhaus\Config\Exception\ConfigLabelNotFoundException
+     * @expectedException Bauhaus\Config\Exception\ConfigItemNotFound
+     * @expectedExceptionMessage No config info found with label 'invalid'
      */
-    public function generateExceptionWhenRequestANonExistingLabel($invalidLabel)
+    public function generateExceptionWhenRequestANonExistingLabel()
     {
-        $this->config->$invalidLabel;
-    }
-
-    public function invalidLabels()
-    {
-        return [
-            ['invalidLabel1'],
-            ['invalidLabel2'],
-        ];
-    }
-
-    /**
-     * @test
-     * @expectedException Bauhaus\Config\Exception\ConfigFailedToReadStreamException
-     */
-    public function generateExceptionWhenInformANotReadablePathToLoad()
-    {
-        $this->config = Config::loadFromPHPFile('invalid.php');
-    }
-
-    /**
-     * @test
-     * @testdox Generate exception when inform a PHP file with invalid content to laod
-     * @expectedException Bauhaus\Config\Exception\ConfigInvalidContentToLoadException
-     */
-    public function generateExceptionWhenInformAPHPFileWithInvalidContentToLoad()
-    {
-        $this->config = Config::loadFromPHPFile(__DIR__ . '/../config-invalid-sample.php');
+        $this->config->invalid;
     }
 }

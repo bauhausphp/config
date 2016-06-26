@@ -1,9 +1,8 @@
 <?php
 
-namespace Bauhaus;
+namespace Bauhaus\Config;
 
 interface ConfigInterface
 {
-    public function get(string $label);
     public function __get(string $label);
 }

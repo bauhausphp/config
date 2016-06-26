@@ -1,19 +1,17 @@
 <?php
 
-namespace Bauhaus;
+namespace Bauhaus\Config;
 
 use Bauhaus\Container\ReadableContainer;
-use Bauhaus\Container\Exception\ContainerItemNotFoundException;
-use Bauhaus\Config\Exception\ConfigLabelNotFoundException;
-use Bauhaus\Config\Exception\ConfigFailedToReadStreamException;
-use Bauhaus\Config\Exception\ConfigInvalidContentToLoadException;
+use Bauhaus\Container\Exception\ContainerItemNotFound;
+use Bauhaus\Config\Exception\ConfigItemNotFound;
 
 class Config extends ReadableContainer implements ConfigInterface
 {
     public function __construct(array $configInfo)
     {
         foreach ($configInfo as $label => $value) {
-            if (is_array($value)) {
+            if (is_array($value) and array_values($value) !== $value) {
                 $value = new Config($value);
             }
 
@@ -21,27 +19,12 @@ class Config extends ReadableContainer implements ConfigInterface
         }
     }
 
-    public function get(string $label)
+    public function __get(string $label)
     {
         try {
-            return parent::get($label);
-        } catch (ContainerItemNotFoundException $e) {
-            throw new ConfigLabelNotFoundException($label);
+            return parent::__get($label);
+        } catch (ContainerItemNotFound $e) {
+            throw new ConfigItemNotFound($label);
         }
-    }
-
-    public static function loadFromPHPFile(string $phpFilePath)
-    {
-        if (is_readable($phpFilePath) === false) {
-            throw new ConfigFailedToReadStreamException($phpFilePath);
-        }
-
-        $configInfo = require $phpFilePath;
-
-        if (is_array($configInfo) === false) {
-            throw new ConfigInvalidContentToLoadException($phpFilePath);
-        }
-
-        return new Config($configInfo);
     }
 }
