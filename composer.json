@@ -34,14 +34,12 @@
   },
 
   "require-dev": {
-    "behat/behat": "~3.0",
     "phpunit/phpunit": "5.3.*"
   },
 
   "autoload-dev": {
     "psr-4": {
       "Bauhaus\\Config\\": [
-        "tests/acceptance/",
         "tests/unit/"
       ]
     }
