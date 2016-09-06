@@ -1,49 +1,49 @@
 {
-   "name": "bauhaus/config",
-   "description": "This package implements a simple config container.",
+  "name": "bauhaus/config",
+  "description": "This package implements a simple config container.",
 
-   "type": "library",
-   "license": "MIT",
+  "type": "library",
+  "license": "MIT",
 
-   "keywords": [
-      "bauhaus",
-      "config"
-   ],
+  "keywords": [
+    "bauhaus",
+    "config"
+  ],
 
-   "authors": [
-      {
-         "name": "Felipe Martins",
-         "homepage": "http://fefas.net"
-      }
-   ],
+  "authors": [
+    {
+      "name": "Felipe Martins",
+      "homepage": "http://fefas.net"
+    }
+  ],
 
-   "support": {
-      "issues": "https://github.com/bauhausphp/package-config/issues",
-      "source": "https://github.com/bauhausphp/package-config"
-   },
+  "support": {
+    "issues": "https://github.com/bauhausphp/package-config/issues",
+    "source": "https://github.com/bauhausphp/package-config"
+  },
 
-   "require": {
-      "php": ">=7.0",
-      "bauhaus/container": "dev-master"
-   },
+  "require": {
+    "php": ">=7.0",
+    "bauhaus/container": "dev-master"
+  },
 
-   "autoload": {
-      "psr-4": {
-         "Bauhaus\\Config\\": "src/"
-      }
-   },
+  "autoload": {
+    "psr-4": {
+      "Bauhaus\\Config\\": "src/"
+    }
+  },
 
-   "require-dev": {
-      "behat/behat": "~3.0",
-      "phpunit/phpunit": "5.3.*"
-   },
+  "require-dev": {
+    "behat/behat": "~3.0",
+    "phpunit/phpunit": "5.3.*"
+  },
 
-   "autoload-dev": {
-      "psr-4": {
-         "Bauhaus\\Config\\": [
-            "tests/acceptance/",
-            "tests/unit/"
-         ]
-      }
-   }
+  "autoload-dev": {
+    "psr-4": {
+      "Bauhaus\\Config\\": [
+        "tests/acceptance/",
+        "tests/unit/"
+      ]
+    }
+  }
 }
