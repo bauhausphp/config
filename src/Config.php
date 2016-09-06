@@ -12,7 +12,7 @@ class Config extends Container
         $arr = [];
         foreach ($configData as $label => $value) {
             if (is_array($value) and array_values($value) !== $value) {
-                $value = new Config($value);
+                $value = new self($value);
             }
 
             $arr[$label] = $value;

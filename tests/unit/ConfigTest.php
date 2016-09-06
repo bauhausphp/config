@@ -8,7 +8,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->config = new Config(require __DIR__ . '/../fixtures/config-sample.php');
+        $this->config = new Config(require __DIR__.'/../fixtures/config-sample.php');
     }
 
     /**
@@ -73,7 +73,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
                     'token' => '*********',
                 ]),
                 'someApi',
-            ]
+            ],
         ];
     }
 
