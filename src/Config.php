@@ -2,29 +2,31 @@
 
 namespace Bauhaus\Config;
 
-use Bauhaus\Container\ReadableContainer;
-use Bauhaus\Container\Exception\ContainerItemNotFound;
-use Bauhaus\Config\Exception\ConfigItemNotFound;
+use Bauhaus\Container\Container;
+use Bauhaus\Container\ContainerItemNotFoundException;
 
-class Config extends ReadableContainer implements ConfigInterface
+class Config extends Container
 {
-    public function __construct(array $configInfo)
+    public function __construct(array $configData)
     {
-        foreach ($configInfo as $label => $value) {
+        $arr = [];
+        foreach ($configData as $label => $value) {
             if (is_array($value) and array_values($value) !== $value) {
                 $value = new Config($value);
             }
 
-            $this->_register($label, $value);
+            $arr[$label] = $value;
         }
+
+        parent::__construct($arr);
     }
 
     public function __get(string $label)
     {
         try {
             return parent::__get($label);
-        } catch (ContainerItemNotFound $e) {
-            throw new ConfigItemNotFound($label);
+        } catch (ContainerItemNotFoundException $e) {
+            throw new ConfigItemNotFoundException($label);
         }
     }
 }

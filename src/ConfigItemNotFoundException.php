@@ -1,8 +1,8 @@
 <?php
 
-namespace Bauhaus\Config\Exception;
+namespace Bauhaus\Config;
 
-class ConfigItemNotFound extends \Exception
+class ConfigItemNotFoundException extends \Exception
 {
     public function __construct($label)
     {

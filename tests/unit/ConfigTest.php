@@ -8,19 +8,19 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->config = new Config(require __DIR__ . '/../config-sample.php');
+        $this->config = new Config(require __DIR__ . '/../fixtures/config-sample.php');
     }
 
     /**
      * @test
-     * @dataProvider valuesAndLabelOfSimpleData
+     * @dataProvider simpleValueAndItsLabel
      */
-    public function retrievingValueWhenRequireSimpleData($expected, $label)
+    public function retrievingSimpleValueWhenRequireOneLevelDeepData($expected, $label)
     {
         $this->assertEquals($expected, $this->config->$label);
     }
 
-    public function valuesAndLabelOfSimpleData()
+    public function simpleValueAndItsLabel()
     {
         return [
             ['testing', 'environment'],
@@ -32,14 +32,14 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @dataProvider sequencialArraysAndLabelOfListData
+     * @dataProvider arrayAndItsLabel
      */
-    public function retrievingSequecialArrayWhenRequireListData($expected, $label)
+    public function retrievingArrayWhenRequireDataThatContainsAList($expected, $label)
     {
         $this->assertEquals($expected, $this->config->$label);
     }
 
-    public function sequencialArraysAndLabelOfListData()
+    public function arrayAndItsLabel()
     {
         return [
             [['val1', 'val2'], 'someList'],
@@ -48,14 +48,14 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @dataProvider configContainerAndLabelOfAssocArrayData
+     * @dataProvider configContainerAndItsLabel
      */
     public function retrievingAnotherConfigContainerWhenRequireAssocArrayData($expected, $label)
     {
         $this->assertEquals($expected, $this->config->$label);
     }
 
-    public function configContainerAndLabelOfAssocArrayData()
+    public function configContainerAndItsLabel()
     {
         return [
             [
@@ -79,7 +79,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException Bauhaus\Config\Exception\ConfigItemNotFound
+     * @expectedException Bauhaus\Config\ConfigItemNotFoundException
      * @expectedExceptionMessage No config info found with label 'invalid'
      */
     public function generateExceptionWhenRequestANonExistingLabel()
