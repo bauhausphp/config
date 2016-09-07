@@ -1,6 +1,6 @@
 {
   "name": "bauhaus/config",
-  "description": "This package implements a simple config container.",
+  "description": "Implement a simple config container.",
 
   "type": "library",
   "license": "MIT",
