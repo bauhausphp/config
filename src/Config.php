@@ -21,10 +21,10 @@ class Config extends Container
         parent::__construct($arr);
     }
 
-    public function __get(string $label)
+    public function get($label)
     {
         try {
-            return parent::__get($label);
+            return parent::get($label);
         } catch (ContainerItemNotFoundException $e) {
             throw new ConfigItemNotFoundException($label);
         }
