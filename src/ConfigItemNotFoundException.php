@@ -2,10 +2,12 @@
 
 namespace Bauhaus\Config;
 
-class ConfigItemNotFoundException extends \Exception
+use Bauhaus\Container\ContainerItemNotFoundException;
+
+class ConfigItemNotFoundException extends ContainerItemNotFoundException
 {
-    public function __construct($label)
+    protected function messageTemplate(): string
     {
-        parent::__construct("No config info found with label '$label'");
+        return "No config info found with label '%s'";
     }
 }
