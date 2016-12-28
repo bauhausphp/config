@@ -7,4 +7,4 @@
 
 [![Build Status](https://img.shields.io/travis/bauhausphp/config/master.svg?style=flat-square)](https://travis-ci.org/bauhausphp/config)
 [![Coverage Status](https://img.shields.io/coveralls/bauhausphp/config/master.svg?style=flat-square)](https://coveralls.io/github/bauhausphp/config?branch=master)
-[![Codacy Badge](https://img.shields.io/codacy/00bd52f0b8ba45bf927cc1e16859cc9b.svg?style=flat-square)](https://www.codacy.com/app/fefas/bauhausphp-config)
+[![Codacy Badge](https://img.shields.io/codacy/2d3cc694c19c460e95b4915ca2c09154.svg?style=flat-square)](https://www.codacy.com/app/fefas/bauhausphp-config)
