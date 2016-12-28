@@ -1,6 +1,5 @@
 # Bauhaus PHP Package - Config
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2d3cc694c19c460e95b4915ca2c09154)](https://www.codacy.com/app/fefas/bauhausphp-config?utm_source=github.com&utm_medium=referral&utm_content=bauhausphp/config&utm_campaign=badger)
 [![Latest Stable Version](https://poser.pugx.org/bauhaus/config/v/stable?format=flat-square)](https://packagist.org/packages/bauhaus/config)
 [![Latest Unstable Version](https://poser.pugx.org/bauhaus/config/v/unstable?format=flat-square)](https://packagist.org/packages/bauhaus/config)
 [![Total Downloads](https://poser.pugx.org/bauhaus/config/downloads?format=flat-square)](https://packagist.org/packages/bauhaus/config)
