@@ -1,9 +1,10 @@
 <?php
 
-namespace Bauhaus\Config;
+namespace Bauhaus;
 
-use Bauhaus\Container\Container;
-use Bauhaus\Container\ContainerItemNotFoundException;
+use Bauhaus\Container;
+use Bauhaus\Container\ItemNotFoundException;
+use Bauhaus\Config\ParameterNotFoundException;
 
 class Config extends Container
 {
@@ -25,8 +26,8 @@ class Config extends Container
     {
         try {
             return parent::get($label);
-        } catch (ContainerItemNotFoundException $e) {
-            throw new ConfigItemNotFoundException($label);
+        } catch (ItemNotFoundException $e) {
+            throw new ParameterNotFoundException($label);
         }
     }
 }

@@ -30,7 +30,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Bauhaus\\Container\\": "src/"
+                    "Bauhaus\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",

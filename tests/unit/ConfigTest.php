@@ -1,6 +1,6 @@
 <?php
 
-namespace Bauhaus\Config;
+namespace Bauhaus;
 
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
@@ -79,8 +79,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException Bauhaus\Config\ConfigItemNotFoundException
-     * @expectedExceptionMessage No config info found with label 'invalid'
+     * @expectedException Bauhaus\Config\ParameterNotFoundException
+     * @expectedExceptionMessage Config parameter 'invalid' not found
      */
     public function generateExceptionWhenRequestANonExistingLabel()
     {
