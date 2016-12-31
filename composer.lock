@@ -40,15 +40,15 @@
             "authors": [
                 {
                     "name": "Felipe Martins",
-                    "homepage": "http://fefas.net"
+                    "homepage": "https://blog.fefas.net"
                 }
             ],
-            "description": "Define and implement a simple container.",
+            "description": "Define and implement a simple container",
             "keywords": [
                 "bauhaus",
                 "container"
             ],
-            "time": "2016-12-27T22:42:09+00:00"
+            "time": "2016-12-31T14:44:39+00:00"
         },
         {
             "name": "container-interop/container-interop",
