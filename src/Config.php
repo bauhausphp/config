@@ -28,6 +28,20 @@ class Config extends Container
         }
     }
 
+    public function asArray(): array
+    {
+        $arrayToReturn = [];
+        foreach ($this->items() as $label => $value) {
+            if ($value instanceof Config) {
+                $value = $value->asArray();
+            }
+
+            $arrayToReturn[$label] = $value;
+        }
+
+        return $arrayToReturn;
+    }
+
     private function isAssocArray($parameter)
     {
         return is_array($parameter) and array_values($parameter) !== $parameter;
