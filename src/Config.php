@@ -11,7 +11,7 @@ class Config extends Container
     public function __construct(array $configParameters)
     {
         foreach ($configParameters as $label => $parameter) {
-            if (is_array($parameter) and array_values($parameter) !== $parameter) {
+            if ($this->isAssocArray($parameter)) {
                 $configParameters[$label] = new self($parameter);
             }
         }
@@ -26,5 +26,10 @@ class Config extends Container
         } catch (ItemNotFoundException $e) {
             throw new ParameterNotFoundException($label);
         }
+    }
+
+    private function isAssocArray($parameter)
+    {
+        return is_array($parameter) and array_values($parameter) !== $parameter;
     }
 }
