@@ -1,6 +1,6 @@
 <?php
 
-namespace Bauhaus\Config;
+namespace Bauhaus;
 
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,14 +13,16 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @dataProvider simpleValueAndItsLabel
+     * @dataProvider simpleValuesAndThemLabels
      */
-    public function retrievingSimpleValueWhenRequireOneLevelDeepData($expected, $label)
-    {
-        $this->assertEquals($expected, $this->config->$label);
+    public function retrieveValueOfASimpleParameterByItsLabel(
+        string $expectedValue,
+        string $label
+    ) {
+        $this->assertEquals($expectedValue, $this->config->$label);
     }
 
-    public function simpleValueAndItsLabel()
+    public function simpleValuesAndThemLabels()
     {
         return [
             ['testing', 'environment'],
@@ -32,30 +34,52 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @dataProvider arrayAndItsLabel
+     * @dataProvider arraysAndThemLabels
      */
-    public function retrievingArrayWhenRequireDataThatContainsAList($expected, $label)
-    {
-        $this->assertEquals($expected, $this->config->$label);
+    public function retrieveArrayOfAListParameterByItsLabel(
+        array $expectedValue,
+        string $label
+    ) {
+        $this->assertEquals($expectedValue, $this->config->$label);
     }
 
-    public function arrayAndItsLabel()
+    public function arraysAndThemLabels()
     {
         return [
-            [['val1', 'val2'], 'someList'],
+            [
+                [
+                    'charmander',
+                    'pikachu',
+                    'butterfly',
+                ],
+                'pokemons'
+            ],
+            [
+                [
+                    'PHP',
+                    'Python',
+                    'Perl',
+                    'C++',
+                    'Java',
+                    'Scala',
+                ],
+                'programmingLanguages'
+            ],
         ];
     }
 
     /**
      * @test
-     * @dataProvider configContainerAndItsLabel
+     * @dataProvider assocArraysAndThemLabel
      */
-    public function retrievingAnotherConfigContainerWhenRequireAssocArrayData($expected, $label)
-    {
-        $this->assertEquals($expected, $this->config->$label);
+    public function retrieveAnotherConfigContainerOfAnAssocArrayParameterByItsLabel(
+        Config $expectedValue,
+        string $label
+    ) {
+        $this->assertEquals($expectedValue, $this->config->$label);
     }
 
-    public function configContainerAndItsLabel()
+    public function assocArraysAndThemLabel()
     {
         return [
             [
@@ -70,17 +94,59 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             [
                 new Config([
                     'baseUrl' => 'example.com/api/',
-                    'token' => '*********',
+                    'token' => 'secret',
                 ]),
-                'someApi',
+                'exampleApi',
             ],
         ];
     }
 
     /**
      * @test
-     * @expectedException Bauhaus\Config\ConfigItemNotFoundException
-     * @expectedExceptionMessage No config info found with label 'invalid'
+     */
+    public function retrieveOriginalArrayUsedToCreateTheConfigContainer()
+    {
+        $expectedResult = [
+            'environment' => 'testing',
+            'debug' => true,
+            'googleMapsApiKey' => '**************',
+            'googleAnalyticsId' => 'U-12345678',
+
+            'pokemons' => [
+                'charmander',
+                'pikachu',
+                'butterfly',
+            ],
+
+            'programmingLanguages' => [
+                'PHP',
+                'Python',
+                'Perl',
+                'C++',
+                'Java',
+                'Scala',
+            ],
+
+            'database' => [
+                'host' => 'localhost',
+                'dbname' => 'testing',
+                'user' => 'bauhaus',
+                'password' => 'secret',
+            ],
+
+            'exampleApi' => [
+                'baseUrl' => 'example.com/api/',
+                'token' => 'secret',
+            ],
+        ];
+
+        $this->assertEquals($expectedResult, $this->config->asArray());
+    }
+
+    /**
+     * @test
+     * @expectedException Bauhaus\Config\ParameterNotFoundException
+     * @expectedExceptionMessage Config parameter 'invalid' not found
      */
     public function generateExceptionWhenRequestANonExistingLabel()
     {

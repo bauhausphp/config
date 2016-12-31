@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "bauhaus/container",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bauhausphp/container.git",
-                "reference": "4a5893e50017ba5614800d1a4747e5b6751e5fb6"
+                "reference": "3905180c55de2b8b1c205820c92a86088d7c6900"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bauhausphp/container/zipball/4a5893e50017ba5614800d1a4747e5b6751e5fb6",
-                "reference": "4a5893e50017ba5614800d1a4747e5b6751e5fb6",
+                "url": "https://api.github.com/repos/bauhausphp/container/zipball/3905180c55de2b8b1c205820c92a86088d7c6900",
+                "reference": "3905180c55de2b8b1c205820c92a86088d7c6900",
                 "shasum": ""
             },
             "require": {
@@ -30,7 +30,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Bauhaus\\Container\\": "src/"
+                    "Bauhaus\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -40,15 +40,15 @@
             "authors": [
                 {
                     "name": "Felipe Martins",
-                    "homepage": "http://fefas.net"
+                    "homepage": "https://blog.fefas.net"
                 }
             ],
-            "description": "Define and implement a simple container.",
+            "description": "Define and implement a simple container",
             "keywords": [
                 "bauhaus",
                 "container"
             ],
-            "time": "2016-12-27T22:42:09+00:00"
+            "time": "2016-12-31T14:44:39+00:00"
         },
         {
             "name": "container-interop/container-interop",

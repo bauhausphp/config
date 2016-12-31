@@ -1,32 +1,49 @@
 <?php
 
-namespace Bauhaus\Config;
+namespace Bauhaus;
 
-use Bauhaus\Container\Container;
-use Bauhaus\Container\ContainerItemNotFoundException;
+use Bauhaus\Container;
+use Bauhaus\Container\ItemNotFoundException;
+use Bauhaus\Config\ParameterNotFoundException;
 
 class Config extends Container
 {
-    public function __construct(array $configData)
+    public function __construct(array $configParameters)
     {
-        $arr = [];
-        foreach ($configData as $label => $value) {
-            if (is_array($value) and array_values($value) !== $value) {
-                $value = new self($value);
+        foreach ($configParameters as $label => $parameter) {
+            if ($this->isAssocArray($parameter)) {
+                $configParameters[$label] = new self($parameter);
             }
-
-            $arr[$label] = $value;
         }
 
-        parent::__construct($arr);
+        parent::__construct($configParameters);
     }
 
     public function get($label)
     {
         try {
             return parent::get($label);
-        } catch (ContainerItemNotFoundException $e) {
-            throw new ConfigItemNotFoundException($label);
+        } catch (ItemNotFoundException $e) {
+            throw new ParameterNotFoundException($label);
         }
+    }
+
+    public function asArray(): array
+    {
+        $arrayToReturn = [];
+        foreach ($this->items() as $label => $value) {
+            if ($value instanceof Config) {
+                $value = $value->asArray();
+            }
+
+            $arrayToReturn[$label] = $value;
+        }
+
+        return $arrayToReturn;
+    }
+
+    private function isAssocArray($parameter)
+    {
+        return is_array($parameter) and array_values($parameter) !== $parameter;
     }
 }

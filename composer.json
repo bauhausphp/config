@@ -1,25 +1,26 @@
 {
   "name": "bauhaus/config",
-  "description": "Implement a simple config container.",
+  "description": "Simple configuration container.",
 
   "type": "library",
   "license": "MIT",
 
   "keywords": [
     "bauhaus",
-    "config"
+    "config",
+    "configuration"
   ],
 
   "authors": [
     {
       "name": "Felipe Martins",
-      "homepage": "http://fefas.net"
+      "homepage": "https://blog.fefas.net"
     }
   ],
 
   "support": {
-    "issues": "https://github.com/bauhausphp/package-config/issues",
-    "source": "https://github.com/bauhausphp/package-config"
+    "issues": "https://github.com/bauhausphp/config/issues",
+    "source": "https://github.com/bauhausphp/config"
   },
 
   "require": {
@@ -29,7 +30,7 @@
 
   "autoload": {
     "psr-4": {
-      "Bauhaus\\Config\\": "src/"
+      "Bauhaus\\": "src/"
     }
   },
 
@@ -39,7 +40,7 @@
 
   "autoload-dev": {
     "psr-4": {
-      "Bauhaus\\Config\\": [
+      "Bauhaus\\": [
         "tests/unit/"
       ]
     }

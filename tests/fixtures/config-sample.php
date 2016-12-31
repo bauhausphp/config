@@ -3,9 +3,23 @@
 return [
     'environment' => 'testing',
     'debug' => true,
-
     'googleMapsApiKey' => '**************',
     'googleAnalyticsId' => 'U-12345678',
+
+    'pokemons' => [
+        'charmander',
+        'pikachu',
+        'butterfly',
+    ],
+
+    'programmingLanguages' => [
+        'PHP',
+        'Python',
+        'Perl',
+        'C++',
+        'Java',
+        'Scala',
+    ],
 
     'database' => [
         'host' => 'localhost',
@@ -14,13 +28,8 @@ return [
         'password' => 'secret',
     ],
 
-    'someApi' => [
+    'exampleApi' => [
         'baseUrl' => 'example.com/api/',
-        'token' => '*********',
-    ],
-
-    'someList' => [
-        'val1',
-        'val2',
+        'token' => 'secret',
     ],
 ];
