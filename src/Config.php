@@ -8,18 +8,15 @@ use Bauhaus\Config\ParameterNotFoundException;
 
 class Config extends Container
 {
-    public function __construct(array $configData)
+    public function __construct(array $configParameters)
     {
-        $arr = [];
-        foreach ($configData as $label => $value) {
-            if (is_array($value) and array_values($value) !== $value) {
-                $value = new self($value);
+        foreach ($configParameters as $label => $parameter) {
+            if (is_array($parameter) and array_values($parameter) !== $parameter) {
+                $configParameters[$label] = new self($parameter);
             }
-
-            $arr[$label] = $value;
         }
 
-        parent::__construct($arr);
+        parent::__construct($configParameters);
     }
 
     public function get($label)
