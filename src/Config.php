@@ -19,15 +19,6 @@ class Config extends Container
         parent::__construct($configParameters);
     }
 
-    public function get($label)
-    {
-        try {
-            return parent::get($label);
-        } catch (ItemNotFoundException $e) {
-            throw new ParameterNotFoundException($label);
-        }
-    }
-
     public function asArray(): array
     {
         $arrayToReturn = [];
@@ -40,6 +31,11 @@ class Config extends Container
         }
 
         return $arrayToReturn;
+    }
+
+    protected function itemNotFoundHandler(string $label)
+    {
+        throw new ParameterNotFoundException($label);
     }
 
     private function isAssocArray($parameter)
