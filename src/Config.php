@@ -23,7 +23,7 @@ class Config extends Container
     {
         $arrayToReturn = [];
         foreach ($this->items() as $label => $value) {
-            if ($value instanceof Config) {
+            if ($this->isInstanceOfConfig($value)) {
                 $value = $value->asArray();
             }
 
@@ -41,5 +41,10 @@ class Config extends Container
     private function isAssocArray($parameter)
     {
         return is_array($parameter) and array_values($parameter) !== $parameter;
+    }
+
+    private function isInstanceOfConfig($value): bool
+    {
+        return $value instanceof Config;
     }
 }
