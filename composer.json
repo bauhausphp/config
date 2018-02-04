@@ -1,15 +1,10 @@
 {
   "name": "bauhaus/config",
-  "description": "Simple configuration container.",
+  "description": "Simple config container",
+  "keywords": ["bauhaus", "container", "config", "configuration"],
 
   "type": "library",
   "license": "MIT",
-
-  "keywords": [
-    "bauhaus",
-    "config",
-    "configuration"
-  ],
 
   "authors": [
     {
