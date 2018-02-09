@@ -1,8 +1,9 @@
 <?php
 
+namespace Bauhaus;
+
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface as PsrContainer;
-use Bauhaus\Config;
 
 class ImplementPsrContainerTest extends TestCase
 {

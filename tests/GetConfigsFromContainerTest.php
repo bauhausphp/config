@@ -1,7 +1,8 @@
 <?php
 
+namespace Bauhaus;
+
 use PHPUnit\Framework\TestCase;
-use Bauhaus\Config;
 use Psr\Container\ContainerInterface as PsrContainer;
 use Psr\Container\NotFoundExceptionInterface as PsrNotFoundException;
 
