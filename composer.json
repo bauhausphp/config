@@ -18,6 +18,15 @@
     "source": "https://github.com/bauhausphp/config"
   },
 
+  "scripts": {
+    "test:cs": "phpcs -ps --colors",
+    "test:unit": "phpunit -c phpunit.xml --colors",
+    "tests": [
+        "@test:cs",
+        "@test:unit"
+    ]
+  },
+
   "require": {
     "php": ">=7.2",
     "psr/container": "^v1.0.0"
