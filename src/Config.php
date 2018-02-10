@@ -2,49 +2,104 @@
 
 namespace Bauhaus;
 
-use Bauhaus\Container;
-use Bauhaus\Container\ItemNotFoundException;
-use Bauhaus\Config\ParameterNotFoundException;
+use InvalidArgumentException;
+use Psr\Container\ContainerInterface as PsrContainer;
+use Bauhaus\Config\NotFoundException;
+use Bauhaus\Config\InvalidSourceFileException;
+use Bauhaus\Config\CouldNotOpenFileException;
 
-class Config extends Container
+class Config implements PsrContainer
 {
-    public function __construct(array $configParameters)
+    private const PATH_COMPONENT_DELIMITER = '.';
+
+    private $values = [];
+
+    public function __construct(array $values)
     {
-        foreach ($configParameters as $label => $parameter) {
-            if ($this->isAssocArray($parameter)) {
-                $configParameters[$label] = new self($parameter);
-            }
+        foreach ($values as $key => $value) {
+            $this->add($key, $value);
+        }
+    }
+
+    public function has($path)
+    {
+        try {
+            $this->get($path);
+        } catch (NotFoundException $ex) {
+            return false;
         }
 
-        parent::__construct($configParameters);
+        return true;
     }
 
-    public function asArray(): array
+    public function get($path)
     {
-        $arrayToReturn = [];
-        foreach ($this->items() as $label => $value) {
-            if ($this->isInstanceOfConfig($value)) {
-                $value = $value->asArray();
-            }
+        return $this->resolvePath($path);
+    }
 
-            $arrayToReturn[$label] = $value;
+    private function add(string $key, $value): void
+    {
+        if (is_object($value)) {
+            throw new InvalidArgumentException("Config '$key' is an object");
         }
 
-        return $arrayToReturn;
+        $isAssocArray = is_array($value) && array_values($value) !== $value;
+
+        if ($isAssocArray) {
+            $value = new self($value);
+        }
+
+        $this->values[$key] = $value;
     }
 
-    protected function itemNotFoundHandler(string $label)
+    private function resolvePath(string $path)
     {
-        throw new ParameterNotFoundException($label);
+        list($root, $subpath) = $this->splitPathRoot($path);
+
+        if (false === $this->hasKey($root)) {
+            throw new NotFoundException($path);
+        }
+
+        $value = $this->values[$root];
+
+        if (empty($subpath)) {
+            return $value;
+        }
+
+        if (!$value instanceof Config) {
+            throw new NotFoundException($path);
+        }
+
+        return $value->get($subpath);
     }
 
-    private function isAssocArray($parameter)
+    private function splitPathRoot(string $path): array
     {
-        return is_array($parameter) and array_values($parameter) !== $parameter;
+        $components = explode(self::PATH_COMPONENT_DELIMITER, $path);
+
+        $root = array_shift($components);
+        $subpath = implode(self::PATH_COMPONENT_DELIMITER, $components);
+
+        return [$root, $subpath];
     }
 
-    private function isInstanceOfConfig($value): bool
+    private function hasKey($key): bool
     {
-        return $value instanceof Config;
+        return array_key_exists($key, $this->values);
+    }
+
+    public static function fromPhp(string $file): self
+    {
+        if (false === is_readable($file)) {
+            throw new CouldNotOpenFileException($file);
+        }
+
+        $values = require $file;
+
+        if (false === is_array($values)) {
+            throw new InvalidSourceFileException($file);
+        }
+
+        return new self($values);
     }
 }
