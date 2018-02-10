@@ -19,31 +19,31 @@ class VerifyIfItemExistsInContainerTest extends TestCase
 
     /**
      * @test
-     * @dataProvider existingLabels
+     * @dataProvider existingPaths
      */
-    public function returnTrueIfThereIsItemWithTheGivenLabel(string $label)
+    public function returnTrueIfThereIsValueWithTheGivenPath(string $path)
     {
-        $this->assertTrue($this->config->has($label));
+        $this->assertTrue($this->config->has($path));
     }
 
-    public function existingLabels(): array
+    public function existingPaths(): array
     {
         return [
-            'Simple label' => ['fefas'],
-            'Composed label' => ['fefas.pokemon'],
+            'Only root' => ['fefas'],
+            'Root and subpath' => ['fefas.pokemon'],
         ];
     }
 
     /**
      * @test
-     * @dataProvider nonExistingLabels
+     * @dataProvider nonExistingPaths
      */
-    public function returnFalseIfThereIsNotItemWithTheGivenLabel(string $label)
+    public function returnFalseIfThereIsNotValueWithTheGivenPath(string $path)
     {
-        $this->assertFalse($this->config->has($label));
+        $this->assertFalse($this->config->has($path));
     }
 
-    public function nonExistingLabels(): array
+    public function nonExistingPaths(): array
     {
         return [
             'Simple label' => ['safef'],

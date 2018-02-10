@@ -3,7 +3,6 @@
 namespace Bauhaus;
 
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface as PsrContainer;
 use Psr\Container\NotFoundExceptionInterface as PsrNotFoundException;
 
 class GetConfigsFromContainerTest extends TestCase
@@ -11,21 +10,21 @@ class GetConfigsFromContainerTest extends TestCase
     /**
      * @test
      */
-    public function getValueWhenItemIsASimpleValue()
+    public function returnValueWhenItIsASimpleValue()
     {
         $config = new Config([
-            'label' => 'item',
+            'key' => 'value',
         ]);
 
-        $simpleValue = $config->get('label');
+        $simpleValue = $config->get('key');
 
-        $this->assertEquals('item', $simpleValue);
+        $this->assertEquals('value', $simpleValue);
     }
 
     /**
      * @test
      */
-    public function getArrayWhenItemIsAnAssocArray()
+    public function returnArrayWhenItIsANonAssocArray()
     {
         $config = new Config([
             'label' => ['charmander', 'pikachu'],
@@ -39,7 +38,7 @@ class GetConfigsFromContainerTest extends TestCase
     /**
      * @test
      */
-    public function getAnotherConfigContainerWhenItemIsAComplexArray()
+    public function returnSubconfigContainerWhenItIsAnAssocArray()
     {
         $config = new Config([
             'label' => [
@@ -47,20 +46,20 @@ class GetConfigsFromContainerTest extends TestCase
                 'instrument' => 'bass',
             ],
         ]);
-        $expected = new Config([
+        $expectedSubconfig = new Config([
             'pokemon' => 'charmander',
             'instrument' => 'bass',
         ]);
 
-        $another = $config->get('label');
+        $subconfig = $config->get('label');
 
-        $this->assertEquals($expected, $another);
+        $this->assertEquals($expectedSubconfig, $subconfig);
     }
 
     /**
      * @test
      */
-    public function getFromSubcontainerWhenGivenComposedLabel()
+    public function returnValueFromSubconfigContainerGivenCompletePath()
     {
         $config = new Config([
             'fefas' => [
@@ -68,43 +67,43 @@ class GetConfigsFromContainerTest extends TestCase
             ],
         ]);
 
-        $itemValue = $config->get('fefas.pokemon');
+        $value = $config->get('fefas.pokemon');
 
-        $this->assertEquals('charmander', $itemValue);
+        $this->assertEquals('charmander', $value);
     }
 
     /**
      * @test
-     * @dataProvider itemsAndInvalidLabels
+     * @dataProvider configsAndInvalidPaths
      */
-    public function throwPsrNotFoundExceptionWhenTryToGetUsingANonExistingLabel(
-        array $items,
-        string $invalidLabel
+    public function throwPsrNotFoundExceptionWhenTryToGetValueUsingAnInvalidPath(
+        array $configs,
+        string $invalidPath
     ) {
-        $config = new Config($items);
+        $config = new Config($configs);
 
         $this->expectException(PsrNotFoundException::class);
-        $this->expectExceptionMessage("Config item '$invalidLabel' not found");
+        $this->expectExceptionMessage("Config '$invalidPath' not found");
 
-        $config->get($invalidLabel);
+        $config->get($invalidPath);
     }
 
-    public function itemsAndInvalidLabels(): array
+    public function configsAndInvalidPaths(): array
     {
         return [
             'Empty config' => [
                 [],
-                'non.existing.label',
+                'invalid.path',
             ],
 
-            'Non existing label' => [
+            'Invalid root' => [
                 ['pokemon' => 'charmander'],
                 'instrument',
             ],
 
-            'Non existing composed label' => [
-                ['non' => 'value'],
-                'non.existing.label',
+            'Valid root, but invalid subpath' => [
+                ['invalid' => 'value'],
+                'invalid.path',
             ],
         ];
     }
