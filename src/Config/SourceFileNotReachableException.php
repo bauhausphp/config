@@ -4,7 +4,7 @@ namespace Bauhaus\Config;
 
 use RuntimeException;
 
-class CouldNotOpenFileException extends RuntimeException
+class SourceFileNotReachableException extends RuntimeException
 {
     public function __construct($filePath)
     {
