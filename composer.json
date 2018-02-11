@@ -20,7 +20,7 @@
 
   "scripts": {
     "test:cs": "phpcs -ps --colors",
-    "test:unit": "phpunit -c phpunit.xml --colors",
+    "test:unit": "phpunit -c phpunit.xml --testdox --colors=always",
     "tests": [
         "@test:cs",
         "@test:unit"
