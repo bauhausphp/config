@@ -45,11 +45,7 @@ class Config implements PsrContainer
 
         $isAssocArray = is_array($value) && array_values($value) !== $value;
 
-        if ($isAssocArray) {
-            $value = new self($value);
-        }
-
-        $this->values[$key] = $value;
+        $this->values[$key] = $isAssocArray ? new self($value) : $value;
     }
 
     private function resolvePath(string $path)
