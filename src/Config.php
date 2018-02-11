@@ -34,7 +34,20 @@ class Config implements PsrContainer
 
     public function get($path)
     {
-        return $this->resolvePath($path);
+        $components = explode(self::PATH_COMPONENT_DELIMITER, $path);
+
+        $current = $this;
+        foreach ($components as $component) {
+            $canGetNext = $current instanceof Config && $current->hasKey($component);
+
+            if (false === $canGetNext) {
+                throw new NotFoundException($path);
+            }
+
+            $current = $current->values[$component];
+        }
+
+        return $current;
     }
 
     private function add(string $key, $value): void
@@ -46,37 +59,6 @@ class Config implements PsrContainer
         $isAssocArray = is_array($value) && array_values($value) !== $value;
 
         $this->values[$key] = $isAssocArray ? new self($value) : $value;
-    }
-
-    private function resolvePath(string $path)
-    {
-        list($root, $subpath) = $this->splitPathRoot($path);
-
-        if (false === $this->hasKey($root)) {
-            throw new NotFoundException($path);
-        }
-
-        $value = $this->values[$root];
-
-        if (empty($subpath)) {
-            return $value;
-        }
-
-        if (!$value instanceof Config) {
-            throw new NotFoundException($path);
-        }
-
-        return $value->get($subpath);
-    }
-
-    private function splitPathRoot(string $path): array
-    {
-        $components = explode(self::PATH_COMPONENT_DELIMITER, $path);
-
-        $root = array_shift($components);
-        $subpath = implode(self::PATH_COMPONENT_DELIMITER, $components);
-
-        return [$root, $subpath];
     }
 
     private function hasKey($key): bool

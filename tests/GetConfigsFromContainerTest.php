@@ -105,6 +105,11 @@ class GetConfigsFromContainerTest extends TestCase
                 ['invalid' => 'value'],
                 'invalid.path',
             ],
+
+            'Valid root, but invalid subpath' => [
+                ['root' => ['subpath1' => ['subpath2' => 'value']]],
+                'root.subpath1.invalid',
+            ],
         ];
     }
 }
