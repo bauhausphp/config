@@ -1,7 +1,8 @@
 <?php
 
+namespace Bauhaus;
+
 use PHPUnit\Framework\TestCase;
-use Bauhaus\Config;
 use Bauhaus\Config\InvalidSourceFileException;
 use Bauhaus\Config\CouldNotOpenFileException;
 
