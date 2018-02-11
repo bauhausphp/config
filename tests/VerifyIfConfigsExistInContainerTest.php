@@ -46,8 +46,8 @@ class VerifyIfItemExistsInContainerTest extends TestCase
     public function nonExistingPaths(): array
     {
         return [
-            'Simple label' => ['safef'],
-            'Composed label' => ['fefas.intruments'],
+            'Only root' => ['safef'],
+            'Root and subpath' => ['fefas.instruments'],
         ];
     }
 }
