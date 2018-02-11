@@ -16,7 +16,7 @@ class DoNotAcceptObjectValuesTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Config 'key' is an object");
 
-        $config = new Config([
+        new Config([
             'key' => new StdClass(),
         ]);
     }
