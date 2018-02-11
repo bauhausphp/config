@@ -5,8 +5,8 @@ namespace Bauhaus;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface as PsrContainer;
 use Bauhaus\Config\NotFoundException;
-use Bauhaus\Config\InvalidSourceFileException;
-use Bauhaus\Config\CouldNotOpenFileException;
+use Bauhaus\Config\SourceFileInvalidException;
+use Bauhaus\Config\SourceFileNotReachableException;
 
 class Config implements PsrContainer
 {
@@ -87,13 +87,13 @@ class Config implements PsrContainer
     public static function fromPhp(string $file): self
     {
         if (false === is_readable($file)) {
-            throw new CouldNotOpenFileException($file);
+            throw new SourceFileNotReachableException($file);
         }
 
         $values = require $file;
 
         if (false === is_array($values)) {
-            throw new InvalidSourceFileException($file);
+            throw new SourceFileInvalidException($file);
         }
 
         return new self($values);

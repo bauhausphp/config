@@ -3,8 +3,8 @@
 namespace Bauhaus;
 
 use PHPUnit\Framework\TestCase;
-use Bauhaus\Config\InvalidSourceFileException;
-use Bauhaus\Config\CouldNotOpenFileException;
+use Bauhaus\Config\SourceFileInvalidException;
+use Bauhaus\Config\SourceFileNotReachableException;
 
 class CreateFromPhpFileTest extends TestCase
 {
@@ -31,7 +31,7 @@ class CreateFromPhpFileTest extends TestCase
     public function throwInvalidSourceFileExceptionIfGivenPhpFileDoesNotReturnAnArray()
     {
         $filePath = __DIR__.'/invalid.php';
-        $this->expectException(InvalidSourceFileException::class);
+        $this->expectException(SourceFileInvalidException::class);
         $this->expectExceptionMessage("Invalid source file '$filePath'");
 
         Config::fromPhp($filePath);
@@ -43,7 +43,7 @@ class CreateFromPhpFileTest extends TestCase
     public function throwCouldNotOpenFileExceptionIfGivenFilePathIsNotReachable()
     {
         $filePath = __DIR__.'/non-existente.php';
-        $this->expectException(CouldNotOpenFileException::class);
+        $this->expectException(SourceFileNotReachableException::class);
         $this->expectExceptionMessage("Could not open file '$filePath'");
 
         Config::fromPhp($filePath);

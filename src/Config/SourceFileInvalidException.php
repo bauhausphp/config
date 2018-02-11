@@ -4,7 +4,7 @@ namespace Bauhaus\Config;
 
 use RuntimeException;
 
-class InvalidSourceFileException extends RuntimeException
+class SourceFileInvalidException extends RuntimeException
 {
     public function __construct($filePath)
     {
