@@ -20,7 +20,7 @@ class CreateFromPhpFileTest extends TestCase
             ],
         ]);
 
-        $config = Config::fromPhp(__DIR__.'/config-sample.php');
+        $config = ConfigLoader::fromPhp(__DIR__.'/config-sample.php');
 
         $this->assertEquals($expected, $config);
     }
@@ -34,7 +34,7 @@ class CreateFromPhpFileTest extends TestCase
         $this->expectException(SourceFileInvalidException::class);
         $this->expectExceptionMessage("Invalid source file '$filePath'");
 
-        Config::fromPhp($filePath);
+        ConfigLoader::fromPhp($filePath);
     }
 
     /**
@@ -46,6 +46,6 @@ class CreateFromPhpFileTest extends TestCase
         $this->expectException(SourceFileNotReachableException::class);
         $this->expectExceptionMessage("Could not open file '$filePath'");
 
-        Config::fromPhp($filePath);
+        ConfigLoader::fromPhp($filePath);
     }
 }
